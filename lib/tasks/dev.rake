@@ -1,17 +1,17 @@
 desc "Fill the database tables with some sample data"
 task({ :sample_data => :environment }) do
   puts "Sample data task running"
-  
   if Rails.env.development?
+      User.destroy_all
+      Board.destroy_all
+      Post.destroy_all
+      end 
+
+  if Rails.env.production?
   ActiveRecord::Base.connection.tables.each do |t|
     ActiveRecord::Base.connection.reset_pk_sequence!(t)
   end
-
-  if Rails.env.development? 
-  User.destroy.all
-  Board.destroy_all
-  Post.destroy_all
-  end 
+end 
 
   usernames = ["alice", "bob", "carol", "dave", "eve"]
 
